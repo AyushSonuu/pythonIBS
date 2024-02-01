@@ -39,5 +39,14 @@ if submit:
     writeTofile(response)
     st.write(response)
 
+      # Add download button
+    download_button = st.download_button(
+        label="Download your notes",
+        data=response,
+        file_name=f"notes_{datetime.datetime.now()}.md",
+        key="download_button"
+    )
+    st.markdown(download_button, unsafe_allow_html=True)
+
 
 
