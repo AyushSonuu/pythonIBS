@@ -4,6 +4,25 @@ class Queue:
     def __init__(self):
         self.__head = None
         self.__tail = None
+        self.__current = None
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.__head is None:
+            raise StopIteration
+        else:
+            if self.__current is None:
+                self.__current = self.__head
+            else:
+                self.__current = self.__current.nextNode
+                
+            if self.__current is None:
+                raise StopIteration
+            
+            val = self.__current.data
+            return val
 
     # def __getattr__(self, name) -> None:
     #     if name=='head'or name=='tail':
@@ -23,8 +42,10 @@ class Queue:
             self.nextNode = None
 
         def __str__(self):
-            return f"Node PrevData({self.previousNode})->Data({self.data})->NextData({self.nextNode})"
-        
+            prev_data = getattr(self.previousNode, 'data', None)
+            next_data = getattr(self.nextNode, 'data', None)
+            return f"Node PrevData({prev_data})->Data({self.data})->NextData({next_data})"
+
         def __repr__(self) -> str:
             return f"__Node({self.data})"
         
@@ -72,11 +93,13 @@ if __name__ == "__main__":
     q1.appendd(22)
     q1.appendd(23)
     q1.appendd(2676)
-    print(q1)
-    q1.popp()
-    print(q1)
-    q1.popp()
-    print(q1)
+    # print(q1)
+    # q1.popp()
+    # print(q1)
+    # q1.popp()
+    # print(q1)
+    for i in q1:
+        print(i)
     # a = _Queue.__Node(23)
     print(q1.__dict__)
     # q1.head=2322
