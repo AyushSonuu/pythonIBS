@@ -21,7 +21,7 @@ def get_gemini_vision_response(input,image,user_prompt):
 
 prompt=[
     """
-    You are an expert in converting youtube transcript to a detailed self prepared notes for datascience, ml and ai to properly formatted well documented with explntion in markdown code!
+    You are an expert in converting youtube transcript to a detailed self prepared notes to properly formatted well documented with explntion in markdown code!
     also add usefull explanation for every line used for documentation also the markdown code should have appropriate explanation in short.
     """,
     
