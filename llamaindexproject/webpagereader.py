@@ -9,7 +9,7 @@ def main(url:str)->None:
     document = SimpleWebPageReader(html_to_text=True).load_data(urls=[url])
     index = VectorStoreIndex.from_documents(documents=document)
     query_engine = index.as_query_engine()
-    response = query_engine.query("wat is the history of generative ai")
+    response = query_engine.query("wat is the history of generative ai" )
     print(response)
 
 

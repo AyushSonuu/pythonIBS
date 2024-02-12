@@ -211,7 +211,7 @@ class Car:
 
         if name == 'model' or name == 'year':
             raise AttributeError("Variable cannot be modified as they are private")
-        return super().__getattr__(name)
+        return super().__getattribute__(name)
 
     def __call__(self):
         '''

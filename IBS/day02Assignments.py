@@ -22,7 +22,7 @@ class Stack:
     def push(self,ele)->None:
         self.stck.append(ele)
 
-    def pop(self)->none:
+    def pop(self)->None:
         try:
             self.stck.pop()
         except Exception as e:
