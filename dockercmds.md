@@ -1,184 +1,75 @@
-## Docker Commands and Usage
+**Docker Commands Notes**
 
 **Pulling an Image**
-```
-docker pull nginx
-```
-- Pulls the Nginx image from the Docker Hub registry.
+
+- `docker pull nginx`: Pulls the official Nginx image from Docker Hub.
 
 **Running a Container**
-```
-docker run --name docker-nginx -p 80:80 nginx #Expose Nginx 80 Port
-```
-- Creates and runs an Nginx container with the name `docker-nginx`.
-- Exposes port 80 from the container to the host machine, allowing access to the Nginx server.
 
-```
-docker run --name docker-nginx -p 8080:80 -d nginx #Expose 8080
-```
-- Same as above, but exposes port 8080 instead of 80.
-- Runs the container in the background (`-d` flag).
-
-```
-docker run -P nginx
-```
-- Automatically maps all exposed ports in the container to random ports on the host machine.
-
-**Running a Container Detached**
-```
-docker run -d -P nginx
-```
-- Runs the container in the background, detached from the terminal session.
+- `docker run --name docker-nginx -p 80:80 nginx`: Runs an Nginx container with the following settings:
+  - Name: `docker-nginx`
+  - Port mapping: Exposes port 80 on the host machine to port 80 inside the container
+- `docker run --name docker-nginx -p 8080:80 -d nginx`: Same as above, but exposes port 8080 to 80 and runs the container in detached mode (background).
+- `docker run -P nginx`: Runs an Nginx container and automatically maps exposed ports to host ports.
+- `docker run -d -P nginx`: Same as above, but runs the container in detached mode.
 
 **Building an Image**
-```
-docker build -t friendlyname . #Create image using this directory's Dockerfile
-```
-- Builds an image using the Dockerfile in the current directory, tagging it with the name `friendlyname`.
+
+- `docker build -t friendlyname .`: Builds an image from the Dockerfile in the current directory and tags it with the name `friendlyname`.
 
 **Running a Custom Image**
-```
-docker run -p 4000:80 friendlyname #Run "friendlyname" mapping port 4000 to 80
-```
-- Runs the `friendlyname` image, mapping port 4000 on the host to port 80 inside the container.
 
-```
-docker run -d -p 4000:80 friendlyname #Same thing, but in detached mode
-```
-- Same as above, but runs the container in detached mode.
+- `docker run -p 4000:80 friendlyname`: Runs the `friendlyname` image and maps port 4000 on the host to port 80 inside the container.
+- `docker run -d -p 4000:80 friendlyname`: Same as above, but runs the container in detached mode.
 
-**Entering a Container**
-```
-docker run --name test-ubuntu -it ubuntu:16.04 ./bin/bash
-```
-- Creates and runs an Ubuntu container named `test-ubuntu`.
-- Attaches a terminal to the container, allowing interactive commands (`-it` flag).
+**Accessing a Container**
 
-**Accessing a Running Container**
-```
-docker exec -it [container-id] bash #Enter a running container
-```
-- Attaches a terminal to an already running container.
+- `docker exec -it [container-id] bash`: Enters an interactive shell within a running container.
 
-**Listing Containers**
-```
-docker ps #See a list of all running containers
-```
-- Lists all running containers.
+**Managing Containers**
 
-```
-docker ps -a #See a list of all containers, even the ones not running
-```
-- Lists all containers, including those that are stopped.
-
-**Stopping and Removing Containers**
-```
-docker stop <hash> #Gracefully stop the specified container
-```
-- Gracefully stops the container with the given hash.
-
-```
-docker kill <hash> #Force shutdown of the specified container
-```
-- Forcefully stops the container with the given hash.
-
-```
-docker rm <hash> #Remove the specified container from this machine
-```
-- Removes the specified container from the machine.
-
-```
-docker rm $(docker ps -a -q) #Remove all containers from this machine
-```
-- Removes all containers from the machine.
+- `docker ps`: Lists all running containers.
+- `docker ps -a`: Lists all containers, including those not running.
+- `docker stop <hash>`: Gracefully stops a running container.
+- `docker kill <hash>`: Forcefully stops a running container.
+- `docker rm <hash>`: Removes a container from the machine.
+- `docker rm $(docker ps -a -q)`: Removes all containers from the machine.
 
 **Managing Images**
-```
-docker images -a #Show all images on this machine
-```
-- Lists all images stored on the machine.
 
-```
-docker rmi <imagename> #Remove the specified image from this machine
-```
-- Removes the specified image from the machine.
+- `docker images -a`: Lists all images on the machine.
+- `docker rmi <imagename>`: Removes a specific image from the machine.
+- `docker rmi $(docker images -q)`: Removes all images from the machine.
 
-```
-docker rmi $(docker images -q) #Remove all images from this machine
-```
-- Removes all images from the machine.
+**Monitoring Logs**
 
-**Viewing Logs**
-```
-docker logs <container-id> -f #Live tail a container's logs
-```
-- Continuously streams the logs of the specified container.
+- `docker logs <container-id> -f`: Continuously prints the logs for a running container.
 
-**Docker Login and Tagging**
-```
-docker login #Log in this CLI session using your Docker credentials
-```
-- Logs in to Docker Hub using your credentials.
+**Accessing Docker Hub**
 
-```
-docker tag <image> username/repository:tag #Tag <image> for upload to registry
-```
-- Tags the specified image with the given username, repository, and tag.
+- `docker login`: Logs in to Docker Hub using the user's credentials.
 
-**Pushing and Running from a Registry**
-```
-docker push username/repository:tag #Upload tagged image to registry
-```
-- Pushes the tagged image to the specified Docker Hub registry.
+**Tagging and Pushing Images to Docker Hub**
 
-```
-docker run username/repository:tag #Run image from a registry
-```
-- Runs the specified image from the Docker Hub registry.
+- `docker tag <image> username/repository:tag`: Tags an image with a username, repository, and tag.
+- `docker push username/repository:tag`: Pushes a tagged image to Docker Hub.
 
-**System Maintenance**
-```
-docker system prune #Remove all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes. (Docker 17.06.1-ce and superior)
-```
-- Removes all unused Docker objects.
+**System Pruning**
 
-```
-docker system prune -a #Remove all unused containers, networks, images not just dangling ones (Docker 17.06.1-ce and superior)
-```
-- Removes all unused Docker objects, including those that are not dangling.
+- `docker system prune`: Removes unused containers, networks, and images.
+- `docker system prune -a`: Removes all unused resources, including dangling images.
 
-**Managing Volumes**
-```
-cd usr/share/nginx/html/ #Navigate to Nginx's default document root
-```
+**Volume Management**
 
-```
-docker volume create my_vol #Create a volume
-```
-- Creates a new Docker volume named `my_vol`.
+- `cd usr/share/nginx/html/`: Changes the working directory to the default Nginx webroot.
+- `docker volume create my_vol`: Creates a new Docker volume named `my_vol`.
+- `docker volume ls`: Lists all Docker volumes.
+- `docker volume inspect my_vol`: Inspects the details of a Docker volume.
+- `docker volume rm my_vol`: Removes a Docker volume.
 
-```
-docker volume ls #List all volumes
-```
-- Lists all volumes on the machine.
+**EC2 Setup**
 
-```
-docker volume inspect my_vol #Inspect a volume
-```
-- Shows detailed information about the specified volume.
-
-```
-docker volume rm my_vol #Remove a volume
-```
-- Removes the specified volume from the machine.
-
-
-## Additional Docker Commands for EC2
-
-**Allowing HTTP Access**
-```sudo yum update -y # Update the system
-sudo yum install -y docker # Install Docker
-sudo service docker start # Start Docker
-sudo usermod -aG docker ec2-user # Add the current user to the docker group
-```
-- These commands are necessary to allow access to port 80 (HTTP) from anywhere on an EC2 instance.
+- `sudo yum update -y`: Updates the system's packages.
+- `sudo yum install -y docker`: Installs Docker.
+- `sudo service docker start`: Starts the Docker service.
+- `sudo usermod -aG docker ec2-user`: Adds the current user to the docker group.
