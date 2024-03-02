@@ -23,6 +23,21 @@ class Queue:
             
             val = self.__current.data
             return val
+    def __getitem__(self, key):
+        if key == 0:
+            return self.__head.data
+        elif key == -1:
+            return self.__tail.data
+        else:
+            raise IndexError(f"Invalid index: {key}")
+    
+    def __setitem__(self, key, value):
+        if key == 0:
+            self.__head.data = value
+        elif key == -1:
+            self.__tail.data = value
+        else:
+            raise IndexError(f"Invalid index: {key}")
 
     # def __getattr__(self, name) -> None:
     #     if name=='head'or name=='tail':
