@@ -108,6 +108,8 @@ if __name__ == "__main__":
     q1.appendd(22)
     q1.appendd(23)
     q1.appendd(2676)
+    a = list(q1)
+    print(a)
     # print(q1)
     # q1.popp()
     # print(q1)
